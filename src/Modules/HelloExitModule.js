@@ -1,18 +1,19 @@
 import {MainError} from "../Utils/Error.js";
 import {exitConst} from "../Variables.js";
-import {logByeMessage, logCurrentDir} from "../Utils/Loggers.js";
+import {logByeMessage, logCurrentDir, logWelcome} from "../Utils/Loggers.js";
+import {typeDataCheck} from "../Utils/TypeDataCheck.js";
 
 const helloExitModule = async () => {
   const userName = process.argv[2].replace("--username=", "")
 
-  console.log(`Welcome to File Manager, ${userName}.`)
+  logWelcome(userName)
 
   logCurrentDir()
 
   process.stdin.on("data", (data, err) => {
-    if (err) MainError(err)
+    if (err) MainError()
 
-    if (data.toString().trim() === exitConst) {
+    if (typeDataCheck(data, exitConst)) {
       process.stdin.end(() => {
         logByeMessage(userName)
       })

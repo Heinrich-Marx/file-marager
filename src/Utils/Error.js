@@ -1,3 +1,5 @@
-const MainError = (err) => new Error(err)
+const MainError = () =>  console.log("Operation failed")
 
-export { MainError }
+const InputError = () => console.log("Invalid input")
+
+export { MainError, InputError }

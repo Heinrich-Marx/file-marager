@@ -5,8 +5,7 @@ import {logCurrentDir} from "../Utils/Loggers.js";
 const invalidInputModule = async () => {
   process.stdin.on("data", (data, err) => {
     if (err) MainError()
-
-    const flag = arrWithAllConst.some((el) => el  === data.toString().trim())
+    const flag = arrWithAllConst.some((el) => el  === data.toString().trim().split(" ")[0])
 
     if (!flag) {
       InputError()

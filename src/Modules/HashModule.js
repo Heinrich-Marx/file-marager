@@ -1,31 +1,32 @@
 import {MainError} from "../Utils/Error.js";
-import {readFileConst} from "../Variables.js";
-import {logCurrentDir} from "../Utils/Loggers.js";
-import {createReadStream} from "fs"
 import {typeDataCheck} from "../Utils/TypeDataCheck.js";
+import {hashConst} from "../Variables.js";
 import {getCorrectName} from "../Utils/GetCorrectName.js";
+import {createReadStream} from "fs";
+import {logCurrentDir} from "../Utils/Loggers.js";
+import {createHash} from "crypto"
 
-const readFileModule = async () => {
+const hashModule = async () => {
   process.stdin.on("data", (data, err) => {
     if (err) MainError()
-    // cat
-    if (typeDataCheck(data, readFileConst)) {
-      const path =  getCorrectName(data, readFileConst)
+    // hash
+    if (typeDataCheck(data, hashConst)) {
+      const path = getCorrectName(data, hashConst)
 
       const readStream = createReadStream(path)
-      console.log('path', path)
+
       readStream
         .on("data", (chunk) => {
-          console.log(chunk.toString())
+          console.log(createHash("sha256").update(chunk.toString()).digest("hex"))
         })
         .on("error", () => {
           MainError()
         })
         .on("end", () => {
-           logCurrentDir()
+          logCurrentDir()
         })
     }
   })
 }
 
-export {readFileModule}
+export {hashModule}

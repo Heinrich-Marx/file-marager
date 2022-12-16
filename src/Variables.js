@@ -20,6 +20,22 @@ const moveFileConst = "mv"
 
 const deleteFileConst = "rm"
 
+const osEolConst = "os --EOL"
+
+const osCpusConst = "os --cpus"
+
+const osHomedirConst = "os --homedir"
+
+const osUserName = "os --username"
+
+const osArchConst = "os --architecture"
+
+const hashConst = "hash"
+
+const compressConst = "compress"
+
+const decompressConst = "decompress"
+
 const arrWithAllConst = [
   exitConst,
   upConstOne,
@@ -31,11 +47,27 @@ const arrWithAllConst = [
   renameFileConst,
   copyFileConst,
   moveFileConst,
-  deleteFileConst
+  deleteFileConst,
+  osEolConst,
+  osCpusConst,
+  osHomedirConst,
+  osUserName,
+  osArchConst,
+  hashConst,
+  compressConst,
+  decompressConst,
 ]
 
 export {
+  compressConst,
+  decompressConst,
+  hashConst,
+  osUserName,
+  osArchConst,
+  osHomedirConst,
+  osCpusConst,
   exitConst,
+  osEolConst,
   upConstOne,
   upConstTwo,
   lsConst,

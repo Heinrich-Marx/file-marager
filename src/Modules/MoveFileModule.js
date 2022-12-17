@@ -4,6 +4,7 @@ import {moveFileConst} from "../Variables.js";
 import {getPathAndNewName} from "../Utils/GetPathAndNewName.js";
 import {appendFile, createReadStream, createWriteStream, unlink} from "fs";
 import {logCurrentDir} from "../Utils/Loggers.js";
+import {addSlashToPath} from "../Utils/AddSlashToPath.js";
 
 const moveFileModule = async () => {
   process.stdin.on("data", (data, err) => {
@@ -11,21 +12,22 @@ const moveFileModule = async () => {
     // mv
     if (typeDataCheck(data, moveFileConst)) {
       const {path, newName} = getPathAndNewName(data, moveFileConst)
-
-      appendFile(newName, "", (err) => {
+      const correctPath = addSlashToPath(path)
+      const correctNewPath = addSlashToPath(newName)
+      appendFile(correctNewPath, "", (err) => {
         if (err) MainError()
 
-        const readStream = createReadStream(path)
-        const writeStream = createWriteStream(newName)
+        const readStream = createReadStream(correctPath)
+        const writeStream = createWriteStream(correctNewPath)
 
         readStream
-          .pipe(writeStream)
           .on("end", () => {
-            unlink(path, (err) => {
+            unlink(correctPath, (err) => {
               if (err) MainError()
-               logCurrentDir()
+              logCurrentDir()
             })
           })
+          .pipe(writeStream)
       })
     }
   })

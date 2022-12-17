@@ -5,13 +5,14 @@ import {getCorrectName} from "../Utils/GetCorrectName.js";
 import {createReadStream, createWriteStream} from "fs";
 import {createUnzip} from "zlib";
 import {logCurrentDir} from "../Utils/Loggers.js";
+import {addSlashToPath} from "../Utils/AddSlashToPath.js";
 
 const decompressModule = async () => {
   process.stdin.on("data", (data, err) => {
     if (err) MainError()
-    // compress
+    // decompress
     if (typeDataCheck(data, decompressConst)) {
-      const path = getCorrectName(data, decompressConst)
+      const path = addSlashToPath(getCorrectName(data, decompressConst))
 
       const readStream = createReadStream(path)
       const writeStream = createWriteStream(path.slice(0, -3))
@@ -20,11 +21,11 @@ const decompressModule = async () => {
         .on("error", () => {
           MainError()
         })
-        .pipe(createUnzip())
-        .pipe(writeStream)
         .on("end", () => {
           logCurrentDir()
         })
+        .pipe(createUnzip())
+        .pipe(writeStream)
     }
   })
 }

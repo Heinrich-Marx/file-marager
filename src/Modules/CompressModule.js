@@ -5,6 +5,7 @@ import {getCorrectName} from "../Utils/GetCorrectName.js";
 import {createReadStream, createWriteStream} from "fs";
 import {createGzip} from "zlib"
 import {logCurrentDir} from "../Utils/Loggers.js";
+import {addSlashToPath} from "../Utils/AddSlashToPath.js";
 
 
 const compressModule = async () => {
@@ -12,7 +13,7 @@ const compressModule = async () => {
     if (err) MainError()
     // compress
     if (typeDataCheck(data, compressConst)) {
-      const path = getCorrectName(data, compressConst)
+      const path = addSlashToPath(getCorrectName(data, compressConst))
 
       const readStream = createReadStream(path)
 
@@ -23,11 +24,12 @@ const compressModule = async () => {
           MainError()
           readStream.destroy()
         })
-        .pipe(createGzip())
-        .pipe(writeStream)
         .on("end", () => {
           logCurrentDir()
         })
+        .pipe(createGzip())
+        .pipe(writeStream)
+
     }
   })
 }

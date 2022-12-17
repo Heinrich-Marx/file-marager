@@ -5,13 +5,14 @@ import {getCorrectName} from "../Utils/GetCorrectName.js";
 import {createReadStream} from "fs";
 import {logCurrentDir} from "../Utils/Loggers.js";
 import {createHash} from "crypto"
+import {addSlashToPath} from "../Utils/AddSlashToPath.js";
 
 const hashModule = async () => {
   process.stdin.on("data", (data, err) => {
     if (err) MainError()
     // hash
     if (typeDataCheck(data, hashConst)) {
-      const path = getCorrectName(data, hashConst)
+      const path = addSlashToPath(getCorrectName(data, hashConst))
 
       const readStream = createReadStream(path)
 

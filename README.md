@@ -1,1 +1,1 @@
-# file-marager
+# file-manager

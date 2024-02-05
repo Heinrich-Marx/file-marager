@@ -1,5 +1,7 @@
-const getPathAndNewName = (data, str) => {
-  const pathWithName = data.toString().trim().replace(str, "").trim()
+const getCorrectName = (str1, str2) => str1.toString().trim().replace(str2, "").trim()
+
+const getPathAndName = (str1, str2) => {
+  const pathWithName = getCorrectName(str1, str2)
 
   const arrWithPathAndName = pathWithName.trim().split(' ')
 
@@ -11,4 +13,4 @@ const getPathAndNewName = (data, str) => {
   })
 }
 
-export {getPathAndNewName}
+export {getCorrectName, getPathAndName}
